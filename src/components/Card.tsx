@@ -1,11 +1,12 @@
 import {
     Card,
-    CardActionArea,
     CardMedia,
     CardContent,
     Typography,
     Button,
-    CardActions
+    List,
+    ListItem,
+    ListItemText,
 } from '@mui/material';
 
 type itemProps = {
@@ -15,7 +16,7 @@ type itemProps = {
     source: string;
     variants: {
         id: number;
-        namne: string;
+        name: string;
         price: number;
     }[];
 };
@@ -23,27 +24,43 @@ type itemProps = {
 const CustomCard = ({ id, name, description, source, variants }: itemProps) => {
     return (
         <Card sx={{ maxWidth: 345 }}>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    height="140"
-                    image={source}
-                    alt="green iguana"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        {description}
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-            <CardActions>
-                <Button size="small" color="primary">
-                    Buy
-                </Button>
-            </CardActions>
+            <CardMedia
+                component="img"
+                height="140"
+                image={source}
+                alt="green iguana"
+            />
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                    {name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {description}
+                </Typography>
+            </CardContent>
+            <List>
+                {variants.map((variant) => {
+                    return (
+                        <ListItem
+                            key={variant.id}
+                            secondaryAction={
+                                <Button
+                                    onClick={() => {
+                                        alert(variant.name)
+                                    }}
+                                >
+                                    BUY
+                                </Button>
+                            }
+                        >
+                            <ListItemText
+                                primary={variant.name}
+                                secondary={`$${variant.price}`}
+                            />
+                        </ListItem>
+                    );
+                })}
+            </List>
         </Card>
     );
 }

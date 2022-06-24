@@ -43,7 +43,7 @@ export function ProductList() {
           };
           variants: {
             id: number;
-            namne: string;
+            name: string;
             price: number;
           }[];
         }) =>
