@@ -1,3 +1,4 @@
+import { AppProvider } from './context/AppContext';
 import {
   ApolloClient,
   ApolloLink,
@@ -39,9 +40,11 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+    <AppProvider>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </AppProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

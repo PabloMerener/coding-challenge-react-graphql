@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { ADD_ITEM_TO_ORDER } from '../graphql/mutations';
 import { useMutation } from '@apollo/client';
+import { AppContextType, useAppStore } from '../context/AppContext';
 
 type itemProps = {
     id: number;
@@ -25,6 +26,8 @@ type itemProps = {
 
 const CustomCard = ({ id, name, description, source, variants }: itemProps) => {
     const [addItemToOrder] = useMutation(ADD_ITEM_TO_ORDER);
+
+    const context = useAppStore() as AppContextType;
 
     return (
         <Card sx={{ maxWidth: 345 }}>
@@ -54,8 +57,7 @@ const CustomCard = ({ id, name, description, source, variants }: itemProps) => {
                                             .then(result => {
                                                 const typename = result.data.addItemToOrder.__typename;
                                                 if (typename === 'Order') {
-                                                    console.log(typename);
-                                                    alert(`addItemToOrder; variante:${variant.id}`);
+                                                    context.addItemPriceToTotal(variant.price);
                                                 } else {
                                                     alert(typename);
                                                 }
