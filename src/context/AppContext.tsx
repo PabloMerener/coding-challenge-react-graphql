@@ -3,12 +3,16 @@ import { createContext, ReactNode, useState, useContext } from 'react';
 const AppContext = createContext({});
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [total, setTotal] = useState(0);
+  const initialTotal = parseInt(localStorage.getItem('total') ?? '0');
+  const [total, setTotal] = useState(initialTotal);
 
   const initialState = {
     total,
     addItemPriceToTotal: (value: number) => {
-      setTotal((prev) => prev + value);
+      setTotal((prev) => {
+        localStorage.setItem('total', (prev + value).toString());
+        return prev + value;
+      });
     },
   };
 
